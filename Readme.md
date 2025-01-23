@@ -175,3 +175,22 @@ CREATE TABLE sounds(column_name DATA_TYPE CONSTRATINT);
 ```sql 
 ALTER TABLE table_name ADD COLUMN column_name DATATYPE CONSTRAINT REFERENCES referenced_table_name(referenced_column_name);
 ```
+#### Junction table
+Many to many relationship usually use a junction table to link two tables together, forming two one to many relationships.
+
+#### creating a composite primary key 
+```sql 
+ALTER TABLE table_name ADD PRIMARY KEY (column1, column2);
+```
+
+#### Show the relational data using `join` command
+```sql
+SELECT columns FROM table_1 FULL JOIN table_2 ON table_1.primary_key_column = table_2.foreign_key_column;
+```
+
+#### join operations in the junction table (many-to-many relationship)
+```sql
+SELECT columns FROM junction_table
+FULL JOIN table_1 ON junction_table.foreign_key_column = table_1.primary_key_column
+FULL JOIN table_2 on junction_table.foreign_key_column = table2.primary_key_column;
+```
