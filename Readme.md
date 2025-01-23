@@ -82,6 +82,7 @@ DELETE FROM second_table WHERE username='Luigi';
 ```
 
 #### How to delete a table
+
 ```sql
 DROP TABLE table_name;
 ```
@@ -93,11 +94,15 @@ ALTER TABLE database_name RENAME TO new_database_name;
 ```
 
 ### data type
+
 #### serial:
-This will make the column an `int` wwwith a `not null` constraint and automatically increment the integer when a new row is added. 
+
+This will make the column an `int` wwwith a `not null` constraint and automatically increment the integer when a new row is added.
 
 #### Adding multiple row at a time
+
 Adding rows one at a time is quite tedious. Here's an example of how you could have added the three rows at once:
+
 ```sql
 INSERT INTO characters(name, homeland, favorite_color)
 VALUES('Mario', 'Mushroom Kingdom', 'Red'),
@@ -109,4 +114,64 @@ VALUES('Mario', 'Mushroom Kingdom', 'Red'),
 
 ```sql
 UPDATE table_name SET column_name=new_value WHERE condition;
+```
+
+#### sort data by column:
+
+```sql
+SELECT columns FROM table_name ORDER BY column_name;
+```
+
+#### adding a primary key in a column
+
+```sql
+ALTER TABLE table_name ADD PRIMARY KEY(colum_name);
+```
+
+#### to drop a constraint from a table in psql
+
+```sql
+ALTER TABLE table_name DROP CONSTRAINT constraint_name;
+```
+
+Wee can see the name of the constraint in the display table output.
+`\d table_name` is the command to display table.
+
+the output should be something like this:
+
+```
+mario_database=> \d characters;
+                                             Table "public.characters"
++----------------+-----------------------+-----------+----------+--------------------------------------------------+
+|     Column     |         Type          | Collation | Nullable |                     Default                      |
++----------------+-----------------------+-----------+----------+--------------------------------------------------+
+| character_id   | integer               |           | not null | nextval('characters_character_id_seq'::regclass) |
+| name           | character varying(30) |           | not null |                                                  |
+| homeland       | character varying(60) |           |          |                                                  |
+| favorite_color | character varying(30) |           |          |                                                  |
++----------------+-----------------------+-----------+----------+--------------------------------------------------+
+Indexes:
+    "characters_pkey" PRIMARY KEY, btree (name)
+```
+
+#### creating a foreign key:
+
+```sql
+ALTER TABLE table_name ADD COLUMN column_name DATATYPE REFERENCES referece_table_name(reference_column_name);
+```
+#### unique
+To ensure one-to-one relationship, one row in the reference table will be related to exactly one row in the current table. This will be enforced by adding the `UNIQUE` constraint to the foreign key.
+
+```sql
+ALTER TABLE table_name ADD UNIQUE(column_name);
+```
+
+#### Creating table with the primary key
+```sql
+CREATE TABLE sounds(column_name DATA_TYPE CONSTRATINT);
+```
+
+#### Adding new column with the fk reference
+```sql 
+ALTER TABLE table_name ADD COLUMN column_name DATATYPE CONSTRAINT REFERENCES referenced_table_name(referenced_column_name);
 ```
