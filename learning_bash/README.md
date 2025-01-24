@@ -250,3 +250,81 @@
        echo $i
      done
      ```
+
+### Testing Conditions in Terminal
+- Use `[[ EXPRESSION ]]; echo $?` to test conditions.
+- Operators:
+  - `-eq`, `-ne`: Equal, Not Equal.
+  - `-lt`, `-le`: Less Than, Less Than or Equal.
+  - `-gt`, `-ge`: Greater Than, Greater Than or Equal.
+- Example:
+  ```bash
+  [[ 5 -le 10 ]]; echo $?  # Outputs 0 for true
+  ```
+
+### File Testing Operators
+- `[[ -a FILE ]]`: Checks if file exists.
+- `[[ -x FILE ]]`: Checks if file is executable.
+
+## Bingo Number Generator
+### Script Setup
+1. **Create Script**: Use `touch bingo.sh`.
+2. **Make Executable**: Run `chmod +x bingo.sh`.
+3. **Add Shebang**: Add `#!/bin/bash` at the top.
+4. **Add Title**: Print a formatted title using `echo`:
+   ```bash
+   echo -e "\n~~ Bingo Number Generator ~~\n"
+   ```
+
+### Generating Random Numbers
+- Use the `$RANDOM` variable for random numbers (0–32767).
+- Limit range with modulus and addition:
+  ```bash
+  NUMBER=$((RANDOM % 75 + 1))
+  ```
+
+### Variables and Calculations
+- Assign values:
+  ```bash
+  NUMBER=$((RANDOM % 75 + 1))
+  TEXT="The next number is, "
+  ```
+- Perform calculations:
+  ```bash
+  RESULT=$((NUMBER + 10))
+  ```
+
+### If-Else for Bingo Letters
+- Use `if-elif-else` to assign letters based on the number:
+  ```bash
+  if (( NUMBER <= 15 ))
+  then
+    echo "$TEXT B:$NUMBER"
+  elif [[ NUMBER -le 30 ]]
+  then
+    echo "$TEXT I:$NUMBER"
+  elif (( NUMBER < 46 ))
+  then
+    echo "$TEXT N:$NUMBER"
+  elif [[ NUMBER -le 60 ]]
+  then
+    echo "$TEXT G:$NUMBER"
+  else
+    echo "$TEXT O:$NUMBER"
+  fi
+  ```
+
+### Testing the Script
+- Run the script multiple times to verify output:
+  ```bash
+  ./bingo.sh
+  ```
+
+### Summary
+- Use `$(( ... ))` for calculations.
+- Use `$RANDOM` for generating random numbers.
+- Combine `if-elif-else` for conditional logic.
+
+The Bingo Number Generator is now complete and functional!
+
+
