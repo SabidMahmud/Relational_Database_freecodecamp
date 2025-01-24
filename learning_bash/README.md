@@ -118,37 +118,135 @@
    echo -e "\nHello $NAME from $LOCATION. I learned that your favorite coding website is $WEBSITE!"
    ```
 
-## Countdown Timer Program
-1. Create a new script file:
+
+## Countdown Timer Script
+
+1. **Creating the Script**:
+
+   - Create the file: `touch countdown.sh`.
+   - Add execute permissions: `chmod +x countdown.sh`.
+   - Add a shebang: `#!/bin/bash`.
+   - Comment: `# Program that counts down to zero from a given argument.`
+
+2. **Using Arguments**:
+
+   - Print arguments: `echo $*`.
+   - Access specific arguments: `echo $1`.
+
+3. **Conditions**:
+
+   - Use `if` syntax:
+     ```bash
+     if [[ CONDITION ]]
+     then
+       STATEMENTS
+     fi
+     ```
+   - Example: `if [[ $1 -gt 0 ]]; then echo "Positive integer."; fi`.
+   - Add `else`:
+     ```bash
+     if [[ $1 -gt 0 ]]
+     then
+       echo "Positive integer."
+     else
+       echo "Include a positive integer as the first argument."
+     fi
+     ```
+
+4. **Expressions and Operators**:
+
+   - Arithmetic: `-eq`, `-ne`, `-lt`, `-le`, `-gt`, `-ge`.
+   - String: `==`, `!=`.
+   - File: `-a` (exists), `-x` (executable).
+   - Logical: `&&` (and), `||` (or).
+
+   Example:
+
    ```bash
-   touch countdown.sh
-   ```
-2. Give it executable permissions:
-   ```bash
-   chmod +x countdown.sh
-   ```
-3. Add a shebang to use the bash interpreter:
-   ```bash
-   #!/bin/bash
-   ```
-4. Add a comment to describe the program:
-   ```bash
-   # Program that counts down to zero from a given argument
-   ```
-5. Access arguments passed to the script:
-   ```bash
-   echo $*
-   ```
-6. Test the script by running it with arguments:
-   ```bash
-   ./countdown.sh arg1 arg2 arg3
-   ```
-7. Modify the script to print only the first argument:
-   ```bash
-   echo $1
-   ```
-8. Run the script again to verify:
-   ```bash
-   ./countdown.sh arg1 arg2 arg3
+   if [[ -x countdown.sh && $1 -gt 0 ]]
+   then
+     echo "Valid file and argument."
+   fi
    ```
 
+5. **Loops**:
+
+   - `for` syntax:
+     ```bash
+     for (( i = START; i >= END; i-- ))
+     do
+       echo $i
+     done
+     ```
+   - Add a loop to count down from the argument:
+     ```bash
+     if [[ $1 -gt 0 ]]
+     then
+       for (( i = $1; i >= 0; i-- ))
+       do
+         echo $i
+       done
+     else
+       echo "Include a positive integer as the first argument."
+     fi
+     ```
+
+6. **Testing for Positive Integers**:
+
+   - Check if the argument is a positive integer:
+     ```bash
+     if [[ $1 =~ ^[0-9]+$ && $1 -gt 0 ]]
+     then
+       echo "Valid positive integer."
+     else
+       echo "Provide a positive integer as an argument."
+     fi
+     ```
+
+---
+
+### Additional Explorations
+
+1. **Testing Exit Status**:
+
+   - Commands have exit statuses:
+     - `0`: Success.
+     - Non-zero: Error.
+   - View exit status: `echo $?`.
+
+   Examples:
+   ```bash
+   [[ 4 -le 5 ]]; echo $?   # 0 (true)
+   [[ 4 -ge 5 ]]; echo $?   # 1 (false)
+   ```
+
+2. **Combining Expressions**:
+
+   - Use `&&` (and) or `||` (or):
+     ```bash
+     [[ -x countdown.sh && 5 -le 4 ]]; echo $?  # 1 (false)
+     [[ -x countdown.sh || 5 -le 4 ]]; echo $?  # 0 (true)
+     ```
+
+3. **Testing Files**:
+
+   - Check if a file exists: `[[ -a countdown.sh ]]; echo $?`.
+   - Check if a file is executable: `[[ -x countdown.sh ]]; echo $?`.
+
+4. **Testing Multiple Conditions**:
+
+   - Use `&&` to combine tests:
+     ```bash
+     [[ -x countdown.sh && -a questionnaire.sh ]]; echo $?
+     ```
+
+5. **Using Expressions in Loops**:
+
+   - Example:
+     ```bash
+     for (( i = 10; i > 0; i-- ))
+     do
+       [[ $i -eq 5 ]] && echo "Halfway there!"
+       echo $i
+     done
+     ```
